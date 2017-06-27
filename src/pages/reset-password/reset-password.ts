@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Auth, User, IDetailedError } from '@ionic/cloud-angular';
+import { IonicPage, NavController } from 'ionic-angular';
+import { Auth, IDetailedError } from '@ionic/cloud-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @IonicPage()
