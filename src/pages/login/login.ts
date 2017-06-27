@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Auth, User } from '@ionic/cloud-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-/**
- * Generated class for the LoginPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-login',
@@ -14,11 +10,52 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  myForm: FormGroup;
+
+  constructor(
+    public navCtrl: NavController,
+    public formBuilder: FormBuilder,
+    public auth: Auth, 
+    public user: User
+  ) {
+    this.myForm = this.formBuilder.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
+  private loginUser(){
+
+    console.log("Email:" + this.myForm.value.email);
+    console.log("Password:" + this.myForm.value.password);
+   
+    let details = {
+      'email': this.myForm.value.email,
+      'password': this.myForm.value.password
+    };
+
+    this.auth.login('basic', details).then(() => {
+      console.log("User logging");
+      this.navCtrl.push('NewsListingPage');
+    }, (err) => {
+
+        console.log(err.message);
+
+        let errors = '';
+        if(err.message === 'UNPROCESSABLE ENTITY') errors += 'Email isn\'t valid.<br/>';
+        if(err.message === 'UNAUTHORIZED') errors += 'Password is required.<br/>';
+      }
+    );
+  
+
+  }
+
+  private goToSignup(){
+    this.navCtrl.push('SignupPage');
+  }
+
+  private goToResetPassword(){
+    this.navCtrl.push('ResetPasswordPage');
   }
 
 }
