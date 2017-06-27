@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController } from 'ionic-angular';
 import { Auth, User } from '@ionic/cloud-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -24,7 +24,7 @@ export class LoginPage {
     });
   }
 
-  private loginUser(){
+  loginUser(){
 
     console.log("Email:" + this.myForm.value.email);
     console.log("Password:" + this.myForm.value.password);
@@ -50,11 +50,11 @@ export class LoginPage {
 
   }
 
-  private goToSignup(){
+  goToSignup(){
     this.navCtrl.push('SignupPage');
   }
 
-  private goToResetPassword(){
+  goToResetPassword(){
     this.navCtrl.push('ResetPasswordPage');
   }
 

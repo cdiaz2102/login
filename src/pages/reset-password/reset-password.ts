@@ -26,7 +26,7 @@ export class ResetPasswordPage {
     console.log('Hello ResetPasswordPage Page');
   }
 
-  private ResetPassword(){
+  resetPassword(){
     console.log("Email:" + this.myForm.value.email);
     this.auth.requestPasswordReset(this.myForm.value.email)
     .then(() => {
