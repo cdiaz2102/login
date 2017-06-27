@@ -1,12 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Auth, User, IDetailedError } from '@ionic/cloud-angular';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
-/**
- * Generated class for the ResetPasswordPage page.
- *
- * See http://ionicframework.com/docs/components/#navigation for more info
- * on Ionic pages and navigation.
- */
 @IonicPage()
 @Component({
   selector: 'page-reset-password',
@@ -14,11 +10,51 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ResetPasswordPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  myForm: FormGroup;
+
+  constructor(
+    private navCtrl: NavController,
+    private formBuilder: FormBuilder,
+    private auth: Auth
+  ) {
+    this.myForm = this.formBuilder.group({
+      email: ['', Validators.required]
+    });
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ResetPasswordPage');
+    console.log('Hello ResetPasswordPage Page');
+  }
+
+  private ResetPassword(){
+    console.log("Email:" + this.myForm.value.email);
+    this.auth.requestPasswordReset(this.myForm.value.email)
+    .then(() => {
+      // `this.user` is now registered
+      console.log('Request Sent');
+      this.navCtrl.push('LoginPage');
+    }, (err: IDetailedError<string[]>) => {
+      for (let e of err.details) {
+        switch (e) {
+        case 'required_email': 
+          console.log('Missing email field.');
+        case 'required_password': 
+          console.log('Missing password field');
+        break; 
+        case 'conflict_email': 
+          console.log('A user has already signed up with the supplied email');
+        break;
+        case 'conflict_username': 
+          console.log('A user has already signed up with the supplied username');
+        break;
+        case 'invalid_email': 
+          console.log('The email did not pass validation.');
+        break;
+        default:
+          console.log('Something unknow.');
+        }     
+      }
+    }); 
   }
 
 }
