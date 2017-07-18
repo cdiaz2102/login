@@ -36,7 +36,7 @@ export class LoginPage {
 
     this.auth.login('basic', details).then(() => {
       console.log("User logging");
-      this.navCtrl.push('NewsListingPage');
+      this.navCtrl.setRoot('HomePage');
     }, (err) => {
 
         console.log(err.message);

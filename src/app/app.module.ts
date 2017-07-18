@@ -7,6 +7,11 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { MyApp } from './app.component';
 
 import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import { FeedProvider } from '../providers/feed/feed';
+import { IonicStorageModule } from '@ionic/storage';
+import { InAppBrowser } from '@ionic-native/in-app-browser';
+import { HttpModule } from '@angular/http';
+import { LoginPage } from '../pages/login/login';
 
 const cloudSettings: CloudSettings = {
   'core': {
@@ -16,21 +21,25 @@ const cloudSettings: CloudSettings = {
 
 @NgModule({
   declarations: [
-    MyApp,
+    MyApp
   ],
   imports: [
     BrowserModule,
+    HttpModule,
     IonicModule.forRoot(MyApp),
+    IonicStorageModule.forRoot(),
     CloudModule.forRoot(cloudSettings)
   ],
   bootstrap: [IonicApp],
   entryComponents: [
-    MyApp,
+    MyApp
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    FeedProvider,
+    InAppBrowser
   ]
 })
 export class AppModule {}

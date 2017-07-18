@@ -1,16 +1,16 @@
 import { NgModule } from '@angular/core';
 import { IonicPageModule } from 'ionic-angular';
-import { NewDetailPage } from './new-detail';
+import { FeedListPage } from './feed-list';
 
 @NgModule({
   declarations: [
-    NewDetailPage,
+    FeedListPage,
   ],
   imports: [
-    IonicPageModule.forChild(NewDetailPage),
+    IonicPageModule.forChild(FeedListPage),
   ],
   exports: [
-    NewDetailPage
+    FeedListPage
   ]
 })
-export class NewDetailPageModule {}
+export class FeedListPageModule {}
