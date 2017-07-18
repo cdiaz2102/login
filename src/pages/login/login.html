@@ -7,6 +7,9 @@
 <ion-content>
   <form [formGroup]="myForm" (ngSubmit)="loginUser()">
     <ion-list>
+      <ion-item text-center>
+        <ion-img width="192" height="192" src="assets/logo192.png" ></ion-img>
+      </ion-item>
       <ion-item>
         <ion-icon name="person" item-left></ion-icon>
         <ion-label stacked>Email:</ion-label>
@@ -19,15 +22,15 @@
       </ion-item>
     </ion-list>
     <div padding>
-      <button ion-button block type="submit" [disabled]="!myForm.valid">Login</button>
+      <button ion-button block type="submit" [disabled]="!myForm.valid">Ingresar</button>
     </div>
   </form>
   <div text-center>
     <a ion-button block clear (click)="goToSignup()">
-      Create a new account
+      Nueva cuenta
     </a>
     <a ion-button block clear (click)="goToResetPassword()">
-      I forgot my password
+      Olvide password
     </a>
   </div>
 </ion-content>

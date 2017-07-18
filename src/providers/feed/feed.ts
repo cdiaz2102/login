@@ -10,6 +10,10 @@ import { Observable } from 'rxjs/Observable';
   See https://angular.io/docs/ts/latest/guide/dependency-injection.html
   for more info on providers and Angular DI.
 */
+
+  /*
+  Based in: https://devdactic.com/rss-reader-ionic2/
+  */
   export class FeedItem {
   description: string;
   link: string;
