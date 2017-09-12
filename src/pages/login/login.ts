@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
-import { Auth, User } from '@ionic/cloud-angular';
+import { IonicPage, NavController,LoadingController, Loading, AlertController} from 'ionic-angular';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
+import { Observable } from 'rxjs/Observable';
 
 @IonicPage()
 @Component({
@@ -11,17 +13,21 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 export class LoginPage {
 
   myForm: FormGroup;
+  user: Observable<firebase.User>;
+  public loading:Loading;
 
   constructor(
     public navCtrl: NavController,
     public formBuilder: FormBuilder,
-    public auth: Auth, 
-    public user: User
+    public afAuth: AngularFireAuth,
+    public alertCtrl: AlertController,
+    public loadingCtrl: LoadingController
   ) {
     this.myForm = this.formBuilder.group({
       email: ['', Validators.required],
       password: ['', Validators.required]
     });
+    this.user = afAuth.authState;
   }
 
   loginUser(){
@@ -29,26 +35,31 @@ export class LoginPage {
     console.log("Email:" + this.myForm.value.email);
     console.log("Password:" + this.myForm.value.password);
    
-    let details = {
-      'email': this.myForm.value.email,
-      'password': this.myForm.value.password
-    };
 
-    this.auth.login('basic', details).then(() => {
+    this.afAuth.auth.signInWithEmailAndPassword(this.myForm.value.email, this.myForm.value.password).then(() => {
       console.log("User logging");
       this.navCtrl.setRoot('HomePage');
     }, (err) => {
+      this.loading.dismiss().then( () => {
+        let alert = this.alertCtrl.create({
+          message: err.message,
+          buttons: [
+            {
+              text: "Ok",
+              role: 'cancel'
+            }
+          ]
+        });
+        alert.present();
+      });
+    });
 
-        console.log(err.message);
-
-        let errors = '';
-        if(err.message === 'UNPROCESSABLE ENTITY') errors += 'Email isn\'t valid.<br/>';
-        if(err.message === 'UNAUTHORIZED') errors += 'Password is required.<br/>';
-      }
-    );
-  
-
+    this.loading = this.loadingCtrl.create({
+      dismissOnPageChange: true,
+    });
+    this.loading.present();
   }
+  
 
   goToSignup(){
     this.navCtrl.push('SignupPage');

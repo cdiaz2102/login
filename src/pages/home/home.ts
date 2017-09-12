@@ -1,6 +1,6 @@
 import { Component, ViewChild } from '@angular/core';
-import { IonicPage, AlertController, NavController, Nav, NavParams } from 'ionic-angular';
-import { Auth, User } from '@ionic/cloud-angular';
+import { IonicPage, AlertController, NavController, Nav } from 'ionic-angular';
+import { AngularFireAuth } from 'angularfire2/auth';
 import { LoginPage } from '../../pages/login/login';
 import { FeedProvider, Feed } from '../../providers/feed/feed';
 
@@ -21,14 +21,14 @@ export class HomePage {
   rootPage = 'FeedListPage';
   feeds: Feed[];
 
-  constructor(private navController: NavController, public auth: Auth, private feedProvider: FeedProvider, public alertCtrl: AlertController) { }
+  constructor(private navController: NavController, public afAuth: AngularFireAuth, private feedProvider: FeedProvider, public alertCtrl: AlertController) { }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad HomePage');
   }
 
   logOut(){
-    this.auth.logout();
+    this.afAuth.auth.signOut();
     this.navController.setRoot(LoginPage);
   }
 

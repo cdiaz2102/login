@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, IonicPage } from 'ionic-angular';
+import { NavParams, IonicPage } from 'ionic-angular';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { FeedProvider, FeedItem, Feed } from '../../providers/feed/feed';
  
@@ -15,7 +15,10 @@ export class FeedListPage {
   selectedFeed: Feed;
   loading: Boolean;
  
-  constructor(private nav: NavController, private iab: InAppBrowser, private feedProvider: FeedProvider, private navParams: NavParams) {
+  constructor(
+    private iab: InAppBrowser, 
+    private feedProvider: FeedProvider,
+    public navParams: NavParams) {
     this.selectedFeed = navParams.get('selectedFeed');
   }
  

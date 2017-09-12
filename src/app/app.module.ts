@@ -6,17 +6,21 @@ import { StatusBar } from '@ionic-native/status-bar';
 
 import { MyApp } from './app.component';
 
-import { CloudSettings, CloudModule } from '@ionic/cloud-angular';
+import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
+
 import { FeedProvider } from '../providers/feed/feed';
 import { IonicStorageModule } from '@ionic/storage';
 import { InAppBrowser } from '@ionic-native/in-app-browser';
 import { HttpModule } from '@angular/http';
-import { LoginPage } from '../pages/login/login';
 
-const cloudSettings: CloudSettings = {
-  'core': {
-    'app_id': 'd862badc'
-  }
+export const firebaseConfig = {
+  apiKey: "AIzaSyAbD19sI5Xz_jKjEMCQhjuYXVPrdn3YEsY",
+  authDomain: "codelab-22299.firebaseapp.com",
+  databaseURL: "https://codelab-22299.firebaseio.com",
+  projectId: "codelab-22299",
+  storageBucket: "codelab-22299.appspot.com",
+  messagingSenderId: "141181591031"
 };
 
 @NgModule({
@@ -28,7 +32,8 @@ const cloudSettings: CloudSettings = {
     HttpModule,
     IonicModule.forRoot(MyApp),
     IonicStorageModule.forRoot(),
-    CloudModule.forRoot(cloudSettings)
+    AngularFireModule.initializeApp(firebaseConfig),
+    AngularFireAuthModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
