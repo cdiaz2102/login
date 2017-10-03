@@ -37,7 +37,7 @@ export class HomePage {
       title: 'Agregar RSS URL',
       inputs: [
         {
-          name: 'name',
+          name: 'title',
           placeholder: 'El mejor sitio'
         },
         {
@@ -53,7 +53,7 @@ export class HomePage {
         {
           text: 'Save',
           handler: data => {
-            let newFeed = new Feed(data.name, data.url);
+            let newFeed = new Feed(data.title, data.url);
             this.feedProvider.addFeed(newFeed).then(
               res => {
                 this.loadFeeds();
